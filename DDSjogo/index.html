@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#007E7A">
+<link rel="icon" type="image/png" href="favicon1.png">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<title>SecurityMine </title>
+</head>
+
+<body>
+
+<button class="btn-f11" onclick="entrarTelaCheia()">
+    <img src="/imagens/f11.png" alt="Tela Cheia">
+</button>
+
+<script>
+function entrarTelaCheia() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+</script>
+
+
+<h2>
+    <img src="imagens/npelogob.png" class="npelogo">
+    <img src="imagens/icon.png" class="icone">
+    SEGURANÇA NA MINA
+    <img src="imagens/valelogob.png" class="valelogo">
+</h2>
+
+
+
+<div class="container">
+
+
+<div class="mapa">
+
+
+<img src="/imagens/mapa3.1.png">
+
+
+
+<div class="area"
+style="left:40%;top:8%;width:12%;height:13%"
+data-img="imagens/Gabarito/Refeitorio.png"
+onclick="selecionar(this,'Refeitório/Open')"></div>
+
+
+<div class="area"
+style="left:46%;top:45%;width:13%;height:14%"
+data-img="imagens/Gabarito/usina.png"
+onclick="selecionar(this,'Usina')"></div>
+
+
+<div class="area"
+style="left:58%;top:48%;width:8%;height:10%"
+data-img="imagens/Gabarito/ponto.png"
+onclick="selecionar(this,'Ponto de Ônibus')"></div>
+
+<div class="area"
+style="left:53%;top:23%;width:8%;height:20%"
+data-img="imagens/Gabarito/silo.png"
+onclick="selecionar(this,'Silo')"></div>
+
+<div class="area"
+style="left:36%;top:50%;width:9%;height:15%"
+data-img="imagens/Gabarito/tenda.png"
+onclick="selecionar(this,'Tenda Planejamento')"></div>
+
+
+<div class="area"
+style="left:66%;top:50%;width:10%;height:15%"
+data-img="imagens/Gabarito/pcm.png"
+onclick="selecionar(this,'PCM')"></div>
+
+
+
+<div class="area"
+style="left:43%;top:60%;width:20%;height:35%"
+data-img="imagens/Gabarito/patio.png"
+onclick="selecionar(this,'Pátio de Estocagem')"></div>
+
+
+<div class="area"
+style="left:27%;top:66%;width:15%;height:25%"
+data-img="imagens/Gabarito/sbr.png"
+onclick="selecionar(this,'SBR')"></div>
+
+
+
+</div>
+
+<script src="popup.js"></script>
+
+
+
+<div class="painel">
+
+
+<h2>EPI Obrigatório</h2>
+
+
+<button onclick="setEpi('Capacete')">
+⛑ Capacete
+</button>
+
+
+<button onclick="setEpi('Óculos')">
+🥽 Óculos
+</button>
+
+
+<button onclick="setEpi('Luvas')">
+🧤 Luvas
+</button>
+
+
+<button onclick="setEpi('Protetor Auricular')">
+🎧 Protetor Auricular
+</button>
+
+
+<button onclick="setEpi('Respirador')">
+😷 Máscara
+</button>
+
+
+<button onclick="setEpi('Botina')">
+🥾 Botina
+</button>
+
+
+
+<button onclick="resetar()" style="background:#a00000">
+♻️ Resetar Game
+</button>
+
+
+
+<button onclick="confirmarResposta()" style="background:#006400">
+✅ Confirmar Resposta
+</button>
+
+
+
+<h3>Locais marcados:</h3>
+
+<div id="lista"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+let selecionado=null;
+
+let dados=JSON.parse(localStorage.getItem("epi")) || {};
+
+
+
+const respostaCorreta = {
+
+"Usina":
+["Capacete","Óculos","Botina","Protetor Auricular"],
+
+"Silo":
+["Capacete","Óculos","Botina","Protetor Auricular", "Luvas"],
+
+"Usina":
+["Capacete","Óculos","Botina","Protetor Auricular", "Luvas"],
+
+"Tenda Planejamento":
+["Botina"],
+
+"Ponto de Ônibus":
+["Botina"],
+
+"PCM":
+["Botina"],
+
+"Pátio de Estocagem":
+["Capacete","Botina","Protetor Auricular", "Óculos"],
+
+"SBR":
+["Capacete","Óculos","Botina","Protetor Auricular", "Luvas"],
+
+"Refeitório/Open":
+[]
+
+};
+
+
+
+
+
+function selecionar(area,nome){
+
+selecionado=nome;
+
+
+document.querySelectorAll(".area")
+.forEach(a=>a.classList.remove("selecionado"));
+
+
+area.classList.add("selecionado");
+
+
+}
+
+
+
+
+
+function setEpi(epi){
+
+
+if(!selecionado){
+
+alert("Selecione um local primeiro!");
+return;
+
+}
+
+
+if(!dados[selecionado])
+dados[selecionado]=[];
+
+
+
+if(!dados[selecionado].includes(epi))
+dados[selecionado].push(epi);
+
+
+
+localStorage.setItem("epi",JSON.stringify(dados));
+
+
+atualizar();
+
+
+}
+
+
+
+
+
+function atualizar(){
+
+let lista=document.getElementById("lista");
+
+lista.innerHTML="";
+
+
+Object.keys(dados).forEach(local=>{
+
+
+lista.innerHTML+=`
+
+<div class="item">
+
+<b>${local}</b><br>
+
+${dados[local].join(", ")}
+
+
+<br><br>
+
+<button 
+onclick="removerEpi('${local}')"
+style="background:#8b0000;">
+❌ Remover último EPI
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+}
+
+function removerEpi(local){
+
+
+if(!dados[local] || dados[local].length === 0){
+    return;
+}
+
+
+// remove somente o último EPI adicionado
+dados[local].pop();
+
+
+// se ficou vazio remove o local
+if(dados[local].length === 0){
+
+    delete dados[local];
+
+}
+
+
+localStorage.setItem("epi", JSON.stringify(dados));
+
+
+atualizar();
+
+
+}
+
+
+
+
+
+function resetar(){
+
+
+if(confirm("Deseja apagar todos os EPIs?")){
+
+
+dados={};
+
+
+localStorage.removeItem("epi");
+
+
+
+document.querySelectorAll(".area")
+.forEach(a=>{
+
+a.classList.remove("selecionado");
+a.classList.remove("explodiu");
+
+});
+
+
+selecionado=null;
+
+
+atualizar();
+
+
+}
+
+}
+
+
+
+
+
+
+
+function confirmarResposta(){
+
+
+let erros=0;
+
+
+let resultado="📋 GABARITO CORRETO:\n\n";
+
+
+
+document.querySelectorAll(".area")
+.forEach(a=>a.classList.remove("explodiu"));
+
+
+
+
+
+Object.keys(respostaCorreta).forEach(local=>{
+
+
+let correto=respostaCorreta[local];
+
+
+let colocado=dados[local] || [];
+
+
+
+resultado +=
+"📍 "+local+"\n"+
+"🦺 EPI: "+
+(correto.length ? correto.join(", ") : "Nenhum")
++"\n\n";
+
+let faltou = correto.some(epi =>
+!colocado.includes(epi)
+);
+
+let errado = colocado.some(epi =>
+!correto.includes(epi)
+);
+
+if(faltou || errado){
+
+explodir(local);
+
+
+erros++;
+
+}
+
+
+});
+
+if(erros===0){
+
+
+alert(
+"🎉 PARABÉNS!\n\n"+
+"Todos os locais estão corretos!\n\n"+
+resultado
+);
+
+
+}
+
+else{
+
+alert(
+"💥 BOOM!\n"+
+"Você errou "+erros+" áreas.\n\n"+
+resultado
+);
+
+
+}
+
+}
+
+function explodir(nome){
+
+
+document.querySelectorAll(".area")
+.forEach(area=>{
+
+
+let click=area.getAttribute("onclick");
+
+
+if(click && click.includes(nome)){
+
+
+area.classList.add("explodiu");
+
+
+}
+
+
+});
+
+
+}
+
+
+
+
+
+atualizar();
+
+
+</script>
+
+<footer>
+
+<div class="footer"
+<h1>Developer by Pedro Santos | NPEGroup</h1>
+</div>
+
+<div class="mensagem"
+<h1>As imagens foram desenvolvidas a partir de imagens reais de satélite e ilustradas para fins de treinamento. Por isso, não representam uma escala ou proporções 100% reais, sendo utilizadas apenas como apoio visual para facilitar a identificação das áreas.</h1>
+</div>
+</footer>
+
+</body>
+</html>

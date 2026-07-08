@@ -1,0 +1,289 @@
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+
+body{
+margin:0;
+background:rgb(255, 255, 255);
+color:#ffffff;
+text-align:center;
+}
+
+.btn-f11{
+    position: fixed;
+    top: 98px;
+    right: 19px;
+    padding: 1px;
+    width: 25px;
+    height: 25px;
+
+    border: none;
+    background:transparent;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-f11:hover{
+    background:#ECB11F;
+}
+
+.btn-f11 img{
+    width: 18px;
+    height: 18px;
+    display: block;
+    pointer-events: none;
+}
+
+.footer{
+    text-align:left;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size:12px;
+    color: #919191;
+    
+    
+    
+}
+
+.mensagem{
+    text-align:left;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size:12px;
+    color: #919191;
+    
+}
+
+h2{
+background:#007E7A;
+color: #ffffff;
+padding:10px;
+margin:0;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start; /* importante */
+    gap:20px;
+    padding:50px;
+    flex-wrap:wrap;
+}
+
+.mapa{
+    position:relative;
+    width:900px;
+    height:565px;
+    max-width:95vw;
+    flex:0 0 auto;      /* impede o flex de alterar o tamanho */
+    overflow:visible;
+}
+
+.mapa img{
+    width:100%;
+    height:100%;
+    object-fit:fill;
+    display:block;
+    border:3px solid #007E7A;
+    border-radius:5px;
+}
+
+.icone{
+    width:28px;
+    vertical-align:middle;
+}
+
+.valelogo{
+    float:left;
+    width:70px;
+}
+
+.npelogo{
+    float:right;
+    width:90px;
+}
+
+
+
+.area{
+position:absolute;
+border:2px solid transparent;
+cursor:pointer;
+z-index:5;
+}
+
+.area:hover{
+border-radius:5px;
+border-color:#007E7A;
+
+}
+
+.area::after{
+    content:"";
+    position:absolute;
+    left:110%;
+    top:50%;
+    transform:translateY(-50%);
+
+    width:min(500px, 90vw);
+    aspect-ratio:500/320;
+    height:auto;
+
+    background-image:var(--img);
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:opacity .2s;
+    z-index:9999;
+    border:2px solid #007E7A;
+    border-radius:5px;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+.area:hover::after{
+    opacity:1;
+    visibility:visible;
+    transition-delay:2s;
+}
+
+.selecionado{
+background:rgba(255,0,0,.35);
+border-color:red;
+border-radius: 5px;
+}
+
+
+
+.explodiu{
+
+animation:explosao .5s infinite;
+
+}
+
+
+
+@keyframes explosao{
+
+0%{
+background:red;
+transform:scale(1);
+}
+
+50%{
+background:orange;
+transform:scale(1.2);
+}
+
+100%{
+background:red;
+transform:scale(1);
+}
+
+}
+
+
+
+.painel{
+    background:#007E7A;
+    width:100%;
+    max-width:270px;
+    padding:20px;
+    border-radius:5px;
+}
+
+
+
+button{
+
+width:100%;
+padding:12px;
+margin:2px;
+cursor:pointer;
+background:#919191;
+color:white;
+border:2px solid #007E7A;
+border-radius:5px;
+
+}
+
+
+button:hover{
+background:#ECB11F;
+}
+
+
+
+#lista{
+text-align:left;
+margin-top:15px;
+}
+
+
+
+.item{
+
+background:#333;
+padding:8px;
+margin:5px;
+border-radius:5px;
+
+}
+
+@media (max-width: 480px){
+
+    .container{
+        padding:10px;
+        gap:15px;
+    }
+
+    .mapa{
+        width:100%;
+        height:auto;
+        aspect-ratio:900/565;
+    }
+
+    .painel{
+        width:100%;
+        max-width:100%;
+        padding:15px;
+    }
+
+    button{
+        font-size:16px;
+        padding:12px;
+}
+    }
+
+    h2{
+    font-size: clamp(18px, 4vw, 30px);
+}
+
+    .valelogo{
+    width: clamp(40px, 12vw, 70px);
+}
+
+.npelogo{
+    width: clamp(50px, 14vw, 90px);
+}
+
+.icone{
+    width: clamp(18px, 6vw, 28px);
+}
+
+@media (max-width:768px){
+    .area::after{
+        display:none;
+    }
+}
