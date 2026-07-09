@@ -180,12 +180,9 @@ let dados=JSON.parse(localStorage.getItem("epi")) || {};
 const respostaCorreta = {
 
 "Usina":
-["Capacete","Óculos","Botina","Protetor Auricular"],
-
-"Silo":
 ["Capacete","Óculos","Botina","Protetor Auricular", "Luvas"],
 
-"Usina":
+"Silo":
 ["Capacete","Óculos","Botina","Protetor Auricular", "Luvas"],
 
 "Tenda Planejamento":
@@ -425,14 +422,22 @@ erros++;
 
 if(erros===0){
 
+    animacaoVitoria();
 
-alert(
-"🎉 PARABÉNS!\n\n"+
-"Todos os locais estão corretos!\n\n"+
-resultado
-);
+    setTimeout(()=>{
 
+        alert(
+        "🎉 PARABÉNS!\n\n"+
+        "Todos os locais estão corretos!\n\n"+
+        resultado
+        );
 
+        localStorage.removeItem("epi");
+
+        location.reload();
+    },3000);
+
+        
 }
 
 else{
@@ -470,6 +475,42 @@ area.classList.add("explodiu");
 });
 
 
+}
+function animacaoVitoria(){
+
+    document.body.classList.add("vitoria");
+
+    setTimeout(()=>{
+        document.body.classList.remove("vitoria");
+    },800);
+
+    const cores=[
+        "#ff0000",
+        "#00cc00",
+        "#0066ff",
+        "#ffff00",
+        "#ff00ff",
+        "#00ffff",
+        "#ff8800"
+    ];
+
+    for(let i=0;i<180;i++){
+
+        const confete=document.createElement("div");
+
+        confete.className="confete";
+
+        confete.style.left=Math.random()*100+"vw";
+        confete.style.background=cores[Math.floor(Math.random()*cores.length)];
+        confete.style.animationDuration=(Math.random()*2+2)+"s";
+        confete.style.transform=`rotate(${Math.random()*360}deg)`;
+
+        document.body.appendChild(confete);
+
+        setTimeout(()=>{
+            confete.remove();
+        },4500);
+    }
 }
 
 
