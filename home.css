@@ -1,0 +1,299 @@
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+
+body{
+margin:0;
+background:rgb(255, 255, 255);
+color:#000000;
+}
+
+.fundo{
+    width:100%;
+    display:block;
+    border:3px solid #007E7A;
+    border-radius: 5px;
+    
+}
+
+.topo{
+    background:#007E7A;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 10px;
+}
+
+.titulo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:24px;
+    font-weight:bold;
+}
+
+.icone{
+    width:28px;
+    vertical-align:middle;
+}
+
+.valelogo{
+    float:left;
+    width:70px;
+}
+
+.npelogo{
+    float:right;
+    width:90px;
+}
+
+
+.area{
+position:absolute;
+border:3px solid transparent;
+cursor:pointer;
+z-index:5;
+}
+
+
+#zoom{
+    position:fixed;
+
+    width:350px;
+    height:300px;
+    border:3px solid #007E7A;
+    border-radius:5px;
+
+    background-repeat:no-repeat;
+    background-size:500%;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.2s;
+
+    pointer-events:none;
+
+    z-index:99999;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+
+.footer{
+    text-align:left;
+    padding-top: 2px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size:13px;
+    color: #919191;
+    
+}
+
+.footer2{
+    text-align:left;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size:13px;
+    color: #919191;
+    
+}
+
+.conteudo{
+    width:100%;
+    padding:20px;
+}
+
+.mapa{
+    
+    padding-top: 46px;
+    padding-left: 14px;
+    position:relative;
+    float:left;
+    width:65%;
+    margin:0 25px 20px 0;
+    
+}
+
+h2{
+    color:#007E7A;
+    flex:1;
+    padding-left: 16px;
+    padding-top: 20px;
+}
+
+p{
+    flex:1;
+    padding:17px;
+    color:#000000;
+    font-size:16.3px;
+    line-height:1.8;
+    text-align:justify;
+}
+
+
+.btn{
+    background:#007E7A;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:12px 20px ;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+
+    display:block;
+    margin-right:auto;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.btn:hover{
+    background:#006864;
+    transform:translateY(-2px);
+    box-shadow:0 5px 15px rgba(0,0,0,.25);
+}
+
+.btn:active{
+    transform:translateY(0);
+    box-shadow:none;
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    background:#007E7A;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.4s;
+    z-index:999999;
+}
+
+#loading.ativo{
+    opacity:1;
+    visibility:visible;
+}
+
+.loading-icon{
+    width:90px;
+    margin-top:20px;
+}
+
+
+
+.loader{
+    width:70px;
+    height:70px;
+    border:6px solid rgba(255,255,255,.2);
+    border-top:6px solid #fff;
+    border-radius:50%;
+    animation:girar .8s linear infinite;
+}
+
+#loading h2,
+#loading p{
+    color:white;
+}
+
+@keyframes girar{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@media (max-width:768px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .topo{
+        padding:8px 12px;
+    }
+
+    .titulo{
+        font-size:16px;
+        gap:5px;
+    }
+
+    .icone{
+        width:18px;
+    }
+
+    .valelogo{
+        width:38px;
+    }
+
+    .npelogo{
+        width:50px;
+    }
+
+    .conteudo{
+        padding:8px;
+    }
+
+    .mapa{
+        float:none;
+        width:100%;
+        margin:0 0 15px;
+        padding:0;
+    }
+
+    .fundo{
+        width:100%;
+        height:auto;
+    }
+
+    h2{
+        padding:10px 0;
+        font-size:20px;
+    }
+
+    p{
+        padding:0;
+        margin-bottom:14px;
+        font-size:14px;
+        line-height:1.5;
+    }
+
+    .btn{
+        width:100%;
+        margin:20px 0 0;
+        padding:12px;
+        font-size:16px;
+    }
+
+    .loading-icon{
+        width:65px;
+    }
+
+    .loader{
+        width:50px;
+        height:50px;
+        border-width:5px;
+    }
+
+    #zoom{
+        display:none;
+    }
+
+    .footer,
+    .footer2{
+        text-align:center;
+        font-size:11px;
+        padding:8px;
+    }
+}
