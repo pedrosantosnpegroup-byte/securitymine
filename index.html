@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#007E7A">
+<link rel="icon" type="image/png" href="favicon1.png">
+<link rel="stylesheet" href="home.css">
+<title>Mina Segura</title>
+
+</head>
+
+<div id="zoom"></div>
+
+<body>
+
+<header class="topo">
+
+    <img src="imagens/valelogob.png" class="valelogo">
+
+    <div class="titulo">
+        <img src="imagens/icon.png" class="icone">
+        Mina Segura
+    </div>
+
+    <img src="imagens/npelogob.png" class="npelogo">
+
+</header>
+
+        <div class="conteudo">
+
+            <div class="mapa">
+
+                <img src="imagens/mapa.png" class="fundo">
+
+                <div class="area"
+                    style="left:1%;top:8%;width:99%;height:92%;"
+                    data-img="imagens/mapa.png"
+                    onclick="selecionar(this,'mapa')">
+                </div>
+
+            </div>
+
+                <div class="text">
+                        <h2>
+                            Sobre o Mina Segura
+                        </h2>
+
+                        <p>
+                            Mina Segura é um jogo de treinamento em segurança do trabalho que utiliza
+                            um mapa interativo para ensinar, de forma prática e intuitiva, quais EPIs
+                            são obrigatórios em cada área operacional de uma mineradora.
+                        </p>
+
+                        <p>
+                            O jogo estimula o reconhecimento de riscos e fortalece as boas práticas
+                            de segurança por meio de desafios e interações.
+                        </p>
+
+                        <h2>
+                            Objetivo
+                        </h2>
+
+                        <p>
+                            O objetivo do Mina Segura é capacitar os participantes a identificar corretamente os 
+                            Equipamentos de Proteção Individual (EPIs) obrigatórios para cada área operacional da 
+                            mineradora. Por meio da análise de um mapa interativo e da associação dos EPIs adequados 
+                            a cada ambiente, o treinamento desenvolve a percepção de riscos, reforça o conhecimento 
+                            das normas de segurança e incentiva a tomada de decisões corretas antes mesmo da execução de 
+                            quaisquer atividades, contribuindo para a prevenção de acidentes e para a promoção de uma cultura de 
+                            segurança no ambiente de trabalho. 
+                            
+                        </p>
+
+                        <h2>
+                            Regras
+                        </h2>
+
+                        <p>
+                            1. No mapa clique na área que deseja analisar.<br>
+                            2. Após selecionar a área, escolha os EPIs obrigatórios utilizando os botões do painel lateral.<br>
+                            3. Os EPIs selecionados serão registrados na lista "Locais marcados".<br>
+                            4. Caso selecione um EPI incorreto, utilize o botão ❌ Remover último EPI para desfazer a última escolha daquele local.<br>
+                            5. Repita o processo para todas as áreas do mapa antes de confirmar.<br>
+                            6. Quando terminar, clique em ✅ Confirmar Resposta.<br>
+                            7. O sistema comparará suas respostas com o gabarito:<br>
+                            &#8195;✅ Áreas corretas permanecerão sem alterações.<br>
+                            &#8195;💥 Áreas incorretas serão destacadas em vermelho e pulsarão, indicando que precisam ser revisadas.<br>
+                            8. Se desejar reiniciar o treinamento, utilize o botão ♻️ Resetar Game.<br>
+
+                                 <h2>
+                                    Objetivo final do jogo
+                                </h2>
+
+                                <p>
+                                Acertar os EPIs obrigatórios de todas as áreas da mineradora sem cometer erros.<br> 
+                                Você está pronto?
+                                </p>
+
+
+                            <button class="btn" onclick="iniciarTreinamento()">
+                                        Iniciar Treinamento
+                            </button>
+                        </p>
+
+        <div id="loading">
+            <img src="imagens/icon.png" class="loading-icon">
+
+            <h2>Preparando treinamento...</h2>
+
+             <div class="loader"></div>
+
+             <p>Carregando ambiente...</p>
+        </div>
+</div>
+
+
+<footer>
+
+<div class="footer">
+    Developer by Pedro Santos | NPEGroup
+</div>
+
+<div class="footer2">
+    
+        As imagens foram desenvolvidas a partir de imagens reais de satélite e ilustradas para fins de treinamento.
+        Por isso, não representam uma escala ou proporções 100% reais, sendo utilizadas apenas como apoio visual
+        para facilitar a identificação das áreas.
+    
+</div>
+
+</footer>
+
+<script>
+
+const zoom = document.getElementById("zoom");
+
+document.querySelectorAll(".area").forEach(area=>{
+
+    area.addEventListener("mouseenter",()=>{
+
+        zoom.style.backgroundImage=`url('${area.dataset.img}')`;
+        zoom.style.opacity="1";
+        zoom.style.visibility="visible";
+
+    });
+
+    area.addEventListener("mouseleave",()=>{
+
+        zoom.style.opacity="0";
+        zoom.style.visibility="hidden";
+
+    });
+
+    area.addEventListener("mousemove",e=>{
+
+        const rect=area.getBoundingClientRect();
+
+        const x=((e.clientX-rect.left)/rect.width)*100;
+        const y=((e.clientY-rect.top)/rect.height)*100;
+
+        // posição do popup
+        zoom.style.left=(rect.right+20)+"px";
+        zoom.style.top=rect.top+"px";
+
+        // acompanha o mouse
+        zoom.style.backgroundPosition=`${x}% ${y}%`;
+
+    });
+
+});
+
+function iniciarTreinamento(){
+
+    document.getElementById("loading").classList.add("ativo");
+
+    setTimeout(() => {
+        window.location.href = "jogo.html";
+    }, 2000);
+
+}
+
+window.addEventListener("pageshow", () => {
+    const loading = document.getElementById("loading");
+
+    loading.classList.remove("ativo");
+    loading.style.opacity = "";
+    loading.style.visibility = "";
+});
+
+</script>
+</body>
+</html>
