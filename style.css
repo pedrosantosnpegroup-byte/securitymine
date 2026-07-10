@@ -491,7 +491,6 @@ border-radius:5px;
     .painel::-webkit-scrollbar-track{
         background:#585a5a;
         border-bottom-right-radius:5px;
-        border-top-right-radius: 0px;
 
     }
     
