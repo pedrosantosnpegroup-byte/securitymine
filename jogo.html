@@ -118,44 +118,44 @@ onclick="selecionar(this,'SBR')"></div>
 <h2>Selecione</h2>
 
 
-<button onclick="setEpi('Capacete')">
+<button class="btn-epi" onclick="setEpi('Capacete', this)">
 ⛑ Capacete
 </button>
 
 
-<button onclick="setEpi('Óculos')">
+<button class="btn-epi" onclick="setEpi('Óculos', this)">
 🥽 Óculos
 </button>
 
 
-<button onclick="setEpi('Luvas')">
+<button class="btn-epi" onclick="setEpi('Luvas', this)">
 🧤 Luvas
 </button>
 
 
-<button onclick="setEpi('Protetor Auricular')">
+<button class="btn-epi" onclick="setEpi('Protetor Auricular', this)">
 🎧 Protetor Auricular
 </button>
 
 
-<button onclick="setEpi('Respirador')">
+<button class="btn-epi" onclick="setEpi('Máscara', this)">
 😷 Máscara
 </button>
 
 
-<button onclick="setEpi('Botina')">
+<button class="btn-epi" onclick="setEpi('Botina', this)">
 🥾 Botina
 </button>
 
 
 
-<button onclick="resetar()" style="background:#a00000">
+<button class="bot" onclick="resetar()">
 ♻️ Resetar Game
 </button>
 
 
 
-<button onclick="confirmarResposta()" style="background:#006400">
+<button class="bot2" onclick="confirmarResposta()">
 ✅ Confirmar Resposta
 </button>
 
@@ -176,6 +176,8 @@ onclick="selecionar(this,'SBR')"></div>
 
 
 <script>
+localStorage.removeItem("epi");
+
 
 let selecionado=null;
 
@@ -225,57 +227,77 @@ function voltarHome(){
 
 function selecionar(area,nome){
 
-selecionado=nome;
+    selecionado = nome;
 
+    document.querySelectorAll(".area")
+    .forEach(a=>a.classList.remove("selecionado"));
 
-document.querySelectorAll(".area")
-.forEach(a=>a.classList.remove("selecionado"));
+    area.classList.add("selecionado");
 
+    
+    document.querySelectorAll(".btn-epi").forEach(btn=>{
+        btn.classList.remove("ativa");
+    });
 
-area.classList.add("selecionado");
+    
+    if(dados[nome]){
+        document.querySelectorAll(".btn-epi").forEach(btn=>{
+            const epi = btn.textContent.replace(/^[^\wÀ-ÿ]+/, "").trim();
 
-atualizarMensagem(
-    "📍 Área selecionada: <b>"+nome+
-    "</b><br>Agora selecione os EPIs necessários."
-);
+            if(dados[nome].includes(epi)){
+                btn.classList.add("ativa");
+            }
+        });
+    }
+    
 
+    atualizarMensagem(
+        "📍 Área selecionada: <b>"+nome+
+        "</b><br>Agora selecione os EPIs necessários."
+    );
 }
 
 
 
 
+function setEpi(epi, botao){
 
-function setEpi(epi){
+    if(!selecionado){
+         atualizarMensagem(
+    "👆 Selecione uma área primeiro.")
 
+         botao.classList.remove("ativa");
+         return;
+    }
+    
 
-if(!selecionado){
+    if(!dados[selecionado]){
+        dados[selecionado] = [];
+    }
 
-alert("Selecione um local primeiro!");
-return;
-
-}
-
-
-if(!dados[selecionado])
-dados[selecionado]=[];
-
-
-
-if(!dados[selecionado].includes(epi))
-dados[selecionado].push(epi);
-
-
-
-localStorage.setItem("epi",JSON.stringify(dados));
-
-
-atualizar();
-
-atualizarMensagem(
-    "✅ EPI adicionado.<br>Continue adicionando EPIs ou escolha outra área.",
-    false
+    if(dados[selecionado].includes(epi)){
+        // Remove o EPI
+        dados[selecionado] = dados[selecionado].filter(e => e !== epi);
+        botao.classList.remove("ativa");
+        atualizarMensagem(
+    "🗑️ Último EPI removido."
 );
+    }else{
+        // Adiciona o EPI
+        dados[selecionado].push(epi);
+        botao.classList.add("ativa");
+        atualizarMensagem(
+    "✅ Epi adicionado. Continue adicionando."
+);
+    }
 
+    if(dados[selecionado].length === 0){
+        delete dados[selecionado];
+    }
+
+    localStorage.setItem("epi", JSON.stringify(dados));
+
+    atualizar();
 }
 
 
@@ -300,58 +322,12 @@ lista.innerHTML+=`
 
 ${dados[local].join(", ")}
 
-
-<br><br>
-
-<button
-onclick="removerEpi('${local}')"
-style="background:#8b0000;">
-❌ Remover último EPI
-</button>
-
-
-</div>
-
 `;
 
 });
 
 
 }
-
-function removerEpi(local){
-
-
-if(!dados[local] || dados[local].length === 0){
-    return;
-}
-
-
-// remove somente o último EPI adicionado
-dados[local].pop();
-
-
-// se ficou vazio remove o local
-if(dados[local].length === 0){
-
-    delete dados[local];
-
-}
-
-
-localStorage.setItem("epi", JSON.stringify(dados));
-
-
-atualizar();
-
-atualizarMensagem(
-    "🗑️ Último EPI removido."
-);
-
-}
-
-
-
 
 
 function resetar(){
@@ -370,8 +346,7 @@ localStorage.removeItem("epi");
 document.querySelectorAll(".area")
 .forEach(a=>{
 
-a.classList.remove("selecionado");
-a.classList.remove("explodiu");
+location.reload();
 
 });
 
@@ -451,43 +426,58 @@ erros++;
 
 if(erros===0){
 
+    atualizarMensagem("🔎 Conferindo suas respostas...");
+
+    
+    setTimeout(()=>{
+
     animacaoVitoria();
+
+    },2000);
 
     setTimeout(()=>{
 
         alert(
-        "🎉 PARABÉNS!\n\n"+
-        "Todos os locais estão corretos!\n\n"+
-        resultado
+            "🎉 PARABÉNS!\n\n"+
+            "Todos os locais estão corretos!\n\n"+
+            resultado
         );
 
         localStorage.removeItem("epi");
 
         location.reload();
-    },3000);
-
-        
+        },3000);
+    
 }
 
 else{
 
     atualizarMensagem(
-    "❌ Existem "+erros+" área(s) incorreta(s). Corrija as áreas destacadas em vermelho."
-);
+        "🔎 Conferindo suas respostas..."
+    );
 
-alert(
-"💥 BOOM!\n"+
-"Você errou "+erros+" áreas.\n\n"+
-resultado
-);
+    setTimeout(() => {
+
+        atualizarMensagem(
+            "❌ Existem "+erros+" área(s) incorreta(s). Corrija as áreas destacadas em vermelho."
+        );
+
+        setTimeout(() => {
+            location.reload();
+        }, 4000);
+
+    }, 3000);
+
+}
+
 
 
 }
 
-}
 
 function explodir(nome){
 
+setTimeout(()=>{
 
 document.querySelectorAll(".area")
 .forEach(area=>{
@@ -504,9 +494,9 @@ area.classList.add("explodiu");
 
 }
 
-
 });
 
+},4000);
 
 }
 function animacaoVitoria(){
@@ -558,7 +548,7 @@ function atualizarMensagem(texto){
 
     const msg = document.getElementById("mensagemJogo");
 
-    // Se a mensagem for igual à anterior, apenas retorna
+    
     if(texto === ultimaMensagem){
         return;
     }

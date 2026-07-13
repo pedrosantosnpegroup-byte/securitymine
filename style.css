@@ -142,7 +142,7 @@ text-align:center;
 }
 
 .footer2{
-    margin-top: 85px;
+    margin-bottom: 10px;
     text-align:center;
     padding-top: 10px;
     padding-right: 15px;
@@ -172,6 +172,7 @@ text-align:center;
 }
 
 .container{
+    margin-top: 70px;
     display:flex;
     justify-content:center;
     align-items:flex-start;
@@ -232,8 +233,8 @@ border-color:#007E7A;
     content:"";
     position:fixed;
 
-    left:90px;
-    top:105px;
+    left:10px;
+    top:128px;
 
     width:400px;
     aspect-ratio:500/320;
@@ -340,12 +341,40 @@ border-radius:5px;
 font-size:15px;
 }
 
-
-button:hover{
-background:#ECB11F;
+.btn-epi:hover{
+    background:#ECB11F;
+    
 }
 
+.btn-epi{
+    transition:0.3s;
+    cursor:pointer;
+}
 
+.btn-epi.ativa{
+    background:#ECB11F;
+}
+
+.bot{
+background-color: #8b0000;
+transition:0.3s;
+cursor:pointer;
+}
+
+.bot2{
+background-color: #006400;
+transition:0.3s;
+cursor:pointer;
+
+}
+
+.bot:hover{
+    background:#680101;
+}
+
+.bot2:hover{
+    background:#014201;
+}
 
 #lista{
 text-align:left;
@@ -465,6 +494,8 @@ border-radius:5px;
         font-size:16px;
         
     }
+ 
+
 
     .area::after{
         display:none !important;
@@ -494,6 +525,24 @@ border-radius:5px;
     right:15px;
     padding:5px 10px;
 }
+
+    .painel::-webkit-scrollbar{
+        width:5px;
+        height: 5px;
+    }
+
+    .painel::-webkit-scrollbar-thumb{
+        
+        background:#ECB11F;
+        border-top-right-radius:5px;
+        border-bottom-right-radius:5px;
+    }
+
+    .painel::-webkit-scrollbar-track{
+        background:#585a5a;
+        border-bottom-right-radius:5px;
+
+    }
 
     .footer,.footer2{
         margin-bottom: 10px;
@@ -533,6 +582,7 @@ border-radius:5px;
     }
 
     .container{
+    margin-top: 10px;
     width:100%;
     max-width:100%;
     padding:0;
@@ -547,16 +597,19 @@ border-radius:5px;
         font-size:10.5px;
     }
 
+
     .mapa{
     width:clamp(560px, 75vw, 640px);
     aspect-ratio:900/565;
     height:auto;
+  
 }
 
     .mapa img{
     
     border-radius:0px;
     border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
     .painel{
@@ -568,8 +621,9 @@ border-radius:5px;
     display:flex;
     flex-direction:column;
     align-items: center;
-
-    border-radius:0;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
     border-bottom-right-radius:5px;
     }
 
@@ -599,6 +653,10 @@ border-radius:5px;
      
 }
 
+    .btn-epi.ativa{
+    background:#ECB11F;
+}
+
     .painel::-webkit-scrollbar{
         width:5px;
         height: 5px;
@@ -607,8 +665,8 @@ border-radius:5px;
     .painel::-webkit-scrollbar-thumb{
         
         background:#ECB11F;
-        border-radius:2px;
-        
+        border-top-right-radius:5px;
+        border-bottom-right-radius:5px;
     }
 
     .painel::-webkit-scrollbar-track{
@@ -616,6 +674,8 @@ border-radius:5px;
         border-bottom-right-radius:5px;
 
     }
-    
+
     
 
+    
+    
