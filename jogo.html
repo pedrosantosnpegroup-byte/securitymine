@@ -12,9 +12,7 @@ content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <body>
 
-<button class="btn-f11" onclick="entrarTelaCheia()">
-    <img src="imagens/f11.png" alt="Tela Cheia">
-</button>
+
 
 <script>
 function entrarTelaCheia() {
@@ -24,6 +22,18 @@ function entrarTelaCheia() {
         document.exitFullscreen();
     }
 }
+
+document.addEventListener("fullscreenchange", () => {
+
+    const icone = document.getElementById("iconeF11");
+
+    if (document.fullscreenElement) {
+        icone.src = "imagens/f11white-.png";
+    } else {
+        icone.src = "imagens/f11white+.png";
+    }
+
+});
 </script>
 
 
@@ -41,12 +51,17 @@ function entrarTelaCheia() {
 </header>
 
 
-
 <div class="container">
-
 
 <div class="mapa">
 
+    <div class="home" onclick="voltarHome()">
+    🏠 Voltar
+    </div>
+
+    <div class="toptext">
+        🎯 O treinamento começou! Observe atentamente cada área e selecione os EPIs corretos. Boa sorte!
+    </div>
 
 <img src="imagens/mapa.png">
 
@@ -54,9 +69,7 @@ function entrarTelaCheia() {
     👆 Selecione uma área do mapa para começar.
 </div>
 
-<div class="home" onclick="voltarHome()">
-    🏠 Voltar
-</div>
+
 
 <div class="area"
 style="left:40%;top:8%;width:12%;height:13%"
@@ -114,6 +127,9 @@ onclick="selecionar(this,'SBR')"></div>
 
 <div class="painel">
 
+    <button class="btn-f11" onclick="entrarTelaCheia()">
+    <img id="iconeF11"  src="imagens/f11white+.png" alt="Tela Cheia">
+    </button>
 
 <h2>Selecione</h2>
 
@@ -501,6 +517,7 @@ area.classList.add("explodiu");
 }
 function animacaoVitoria(){
 
+    
     document.body.classList.add("vitoria");
 
     setTimeout(()=>{
